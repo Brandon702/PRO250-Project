@@ -39,8 +39,8 @@ namespace Assets.Scripts.Game.Player
         private void Update()
         {
             // Stop walk animation
-            if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) ||
-                Input.GetKeyUp(KeyCode.D))
+            if (Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.DownArrow) ||
+                Input.GetKeyUp(KeyCode.RightArrow))
             {
                 _animator.SetBool("Move", false);
 
@@ -48,8 +48,8 @@ namespace Assets.Scripts.Game.Player
             }
 
             // Run walk animation
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) ||
-                Input.GetKey(KeyCode.D))
+            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.DownArrow) ||
+                Input.GetKey(KeyCode.RightArrow))
             {
                 _animator.SetBool("Move", true);
 
@@ -76,7 +76,7 @@ namespace Assets.Scripts.Game.Player
             if (InventoryManager.IsInventoryOpened == false && MapToggler.IsMapOpened == false)
             {
                 // Move forward
-                if (Input.GetKey(KeyCode.W))
+                if (Input.GetKey(KeyCode.UpArrow))
                 {
                     _transform.AddForce(new Vector3(0, 0, 5) * Speed, ForceMode.VelocityChange);
 
@@ -85,7 +85,7 @@ namespace Assets.Scripts.Game.Player
                 }
 
                 // Move left
-                if (Input.GetKey(KeyCode.A))
+                if (Input.GetKey(KeyCode.LeftArrow))
                 {
                     _transform.AddForce(new Vector3(-5, 0, 0) * Speed, ForceMode.VelocityChange);
 
@@ -94,7 +94,7 @@ namespace Assets.Scripts.Game.Player
                 }
 
                 // Move back
-                if (Input.GetKey(KeyCode.S))
+                if (Input.GetKey(KeyCode.DownArrow))
                 {
                     _transform.AddForce(new Vector3(0, 0, -5) * Speed, ForceMode.VelocityChange);
 
@@ -103,7 +103,7 @@ namespace Assets.Scripts.Game.Player
                 }
 
                 // Move right
-                if (Input.GetKey(KeyCode.D))
+                if (Input.GetKey(KeyCode.RightArrow))
                 {
                     _transform.AddForce(new Vector3(5, 0, 0) * Speed, ForceMode.VelocityChange);
 
