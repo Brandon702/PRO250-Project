@@ -9590,24 +9590,24 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '<color=#FFCB4C>W</color> - Move Forward
+  m_Text: '<color=#FFCB4C>Up Arrow</color> - Move Forward
 
-    <color=#FFCB4C>A</color>
-    - Move Left
+    <color=#FFCB4C>Left
+    Arrow</color> - Move Left
 
-    <color=#FFCB4C>S</color> - Move Back
+    <color=#FFCB4C>Down Arrow</color> - Move Back
 
-    <color=#FFCB4C>D</color>
-    - Move Right
+    <color=#FFCB4C>Right
+    Arrow</color> - Move Right
 
-    <color=#FFCB4C>K</color> - Store Interaction
+    <color=#FFCB4C>S</color> - Store Interaction
 
     <color=#FFCB4C>Escape</color>
     - Menu
 
     <color=#FFCB4C>I</color> - Info
 
-    <color=#FFCB4C>B</color> - Library
+    <color=#FFCB4C>L</color> - Library
 
     <color=#FFCB4C>F</color>
     - Interact
