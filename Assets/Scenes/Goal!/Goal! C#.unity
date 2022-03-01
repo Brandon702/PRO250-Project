@@ -8347,9 +8347,8 @@ MonoBehaviour:
   - {fileID: 508168076}
   - {fileID: 101642119}
   - {fileID: 2057410976}
-  emptySpace: {fileID: 0}
-  end: {fileID: 0}
-  movable: {fileID: 21300000, guid: 17f9ac5409e2c214bbfd77f7139fb745, type: 3}
+  goal: {fileID: 21300000, guid: b251628b41161214b85061e0ee6f1809, type: 3}
+  player: {fileID: 21300000, guid: 17f9ac5409e2c214bbfd77f7139fb745, type: 3}
 --- !u!1 &1732325938
 GameObject:
   m_ObjectHideFlags: 0
