@@ -12,7 +12,7 @@ namespace Assets.Scripts.Game.Inventory
         // Update is called once per frame
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.L) 
+            if (Input.GetKeyDown(KeyCode.B) 
                 && BookHandler.IsBookOpen == false
                 && MapToggler.IsMapOpened == false
                 && NPCHandler.IsDuringConversation == false)
