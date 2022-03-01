@@ -91,7 +91,7 @@ namespace Assets.Scripts.Game
         {
             base.Update();
 
-            if (Input.GetKeyDown(KeyCode.F) && IsPlayerInDialogueArea == true &&
+            if (Input.GetKeyDown(KeyCode.E) && IsPlayerInDialogueArea == true &&
                 IsDuringConversation == false && _isLevelPlayable == true &&
                 _privateObjectState && _isLevelCompleted == false)
             {
