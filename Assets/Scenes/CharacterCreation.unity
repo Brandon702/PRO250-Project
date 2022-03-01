@@ -2540,7 +2540,7 @@ PrefabInstance:
     - target: {fileID: 677619876258964179, guid: 58598ba971f2a8840bcc4342fa62a73a,
         type: 3}
       propertyPath: m_Text
-      value: "POWR\xD3T"
+      value: BACK
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58598ba971f2a8840bcc4342fa62a73a, type: 3}
@@ -7651,7 +7651,7 @@ PrefabInstance:
     - target: {fileID: 677619876258964179, guid: 58598ba971f2a8840bcc4342fa62a73a,
         type: 3}
       propertyPath: m_Text
-      value: GRAJ
+      value: START
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58598ba971f2a8840bcc4342fa62a73a, type: 3}
