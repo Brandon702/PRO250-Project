@@ -8374,7 +8374,6 @@ MonoBehaviour:
 
 
 
-    (Must be near a store)
 
 
 
@@ -9600,16 +9599,14 @@ MonoBehaviour:
     <color=#FFCB4C>Right
     Arrow</color> - Move Right
 
-    <color=#FFCB4C>S</color> - Store Interaction
+    <color=#FFCB4C>Escape</color> - Menu
 
-    <color=#FFCB4C>Escape</color>
-    - Menu
-
-    <color=#FFCB4C>I</color> - Info
+    <color=#FFCB4C>I</color>
+    - Info
 
     <color=#FFCB4C>L</color> - Library
 
-    <color=#FFCB4C>F</color>
+    <color=#FFCB4C>E</color>
     - Interact
 
     <color=#FFCB4C>M</color> - Map'

@@ -76,7 +76,7 @@ namespace Assets.Scripts.Game.Player
             if (InventoryManager.IsInventoryOpened == false && MapToggler.IsMapOpened == false)
             {
                 // Move forward
-                if (Input.GetKey(KeyCode.UpArrow))
+                if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
                 {
                     _transform.AddForce(new Vector3(0, 0, 5) * Speed, ForceMode.VelocityChange);
 
@@ -85,25 +85,25 @@ namespace Assets.Scripts.Game.Player
                 }
 
                 // Move left
-                if (Input.GetKey(KeyCode.LeftArrow))
+                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
                 {
                     _transform.AddForce(new Vector3(-5, 0, 0) * Speed, ForceMode.VelocityChange);
-
+                    
                     if (Pickup.IsHolding == false)
                         _transform.rotation = Quaternion.LookRotation(Vector3.left);
                 }
 
                 // Move back
-                if (Input.GetKey(KeyCode.DownArrow))
-                {
+                if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+                {   
                     _transform.AddForce(new Vector3(0, 0, -5) * Speed, ForceMode.VelocityChange);
-
+                    
                     if (Pickup.IsHolding == false)
                         _transform.rotation = Quaternion.LookRotation(Vector3.back);
                 }
 
                 // Move right
-                if (Input.GetKey(KeyCode.RightArrow))
+                if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
                 {
                     _transform.AddForce(new Vector3(5, 0, 0) * Speed, ForceMode.VelocityChange);
 
