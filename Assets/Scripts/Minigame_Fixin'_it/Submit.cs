@@ -6,9 +6,12 @@ namespace gameController
 {
     public class Submit : MonoBehaviour
     {
+        #region Variables
         bool active = false;
         GameController gameController;
+        #endregion
 
+        #region Core Functions
         private void Awake()
         {
             gameController = GameObject.Find("Game").GetComponent<GameController>();
@@ -20,7 +23,9 @@ namespace gameController
                 gameController.submitText();
             }
         }
+        #endregion
 
+        #region Triggers 
         private void OnTriggerEnter(Collider other)
         {
             active = true;
@@ -30,5 +35,6 @@ namespace gameController
         {
             active = false;
         }
+        #endregion
     }
 }
