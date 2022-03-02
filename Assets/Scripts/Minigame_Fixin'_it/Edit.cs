@@ -21,7 +21,7 @@ namespace gameController
         {
             if (Input.GetKeyDown("space") && active)
             {
-                gameController.editText();
+                gameController.EditText();
             }
         }
         #endregion

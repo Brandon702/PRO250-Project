@@ -11,7 +11,10 @@ namespace gameController
         #region Variables
         List<String> questions = new List<string>();
         TextMeshPro textChanger;
-        List<String> test = new List<string>();
+        GameObject winUI;
+        int currLevel = 0;
+        int score = 0;
+
         #endregion
 
         #region Core Functions
@@ -19,7 +22,7 @@ namespace gameController
         {
             //populate questions list (3 questions)
             questions.Add(
-                "Instructions: Return a list of integers from 1 to 10\n" + 
+                "//Instructions: Return a list of integers from 1 to 10\n" + 
                 "\n" +
                 "public List<int> generateList()\n" +
                 "{\n" +
@@ -28,33 +31,45 @@ namespace gameController
                 "       //Add to the integer list object\n" +
                 "}\n"
                 );
+
             questions.Add(
-                ""
+                "//Instructions: Concatenate a list of strings into one string in a readable format\n" +
+                "//HINT: Add a \", \" to the end of each addition to the string\n" +
+                "public string Concat(List<string> strings)\n" +
+                "{\n" +
+                "   int listSize = strings.Count - 1;\n" +
+                "   for (int i = listSize; i < 0; i++)\n" +
+                "   {\n" +
+                "       final += strings[i];\n" +
+                "   }\n" +
+                "   //HINT: Dont forget to cut off the end of a string if it contains unnessisary chars\n" +
+                "   Debug.Log(final);\n" +
+                "   return final;\n" +
+                "}\n"
+                );
+            questions.Add(
+                "//Instructions: Calculate the volume of the sun... yes really, you are given the radius and the volume formula to make it easier luckily\n" +
+                "//HINT: Dont forget to use Math functions such as Math.PI to use pi or Math.E for Eulers number to calcualte special numbers\n" +
+                "public float VolumeOfTheSun(float radius)\n" +
+                "{\n" +
+                "    //HINT: Formula for finding the volume of a sphere is as follows: (((4/3) * PI) radius^3)\n" +
+                "}\n"
                 );
 
-            test.Add("1");
-            test.Add("2");
-            test.Add("3");
-            test.Add("4");
-            test.Add("5");
-            test.Add("6");
-
             textChanger = GameObject.Find("GameText").GetComponent<TextMeshPro>();
-            textChanger.text = questions[0];
-
-
-            //Test functions here
-            generateList();
-            concat(test);
+            winUI = GameObject.Find("Win_Canvas");
+            winUI.SetActive(false);
+            QuestionController(currLevel);
         }
         #endregion
 
         #region Test Functions
-        //Generate a list of ints from 1-10
-        public List<int> generateList()
+        //Generate a list of ints from from 1 to a given length
+        //HINT: Use a loop to get a set number of ints
+        public List<int> GenerateList(int length)
         {
             List<int> intList = new List<int>();
-            for(int i = 0; i < 10; i++)
+            for(int i = 0; i < length; i++)
             {
                 intList.Add(i+1);
                 Debug.Log(intList[i]);
@@ -62,8 +77,10 @@ namespace gameController
             return intList;
         }
 
-        //Concatate a list of strings in reverse (HINT Add ", " to the end of each addition to the string)
-        public string concat(List<string> strings)
+        //Concatate a list of strings in reverse 
+        //HINT: Add ", " to the end of each addition to the string
+        //HINT: Dont forget to cut off the end of a string if it contains unnessisary chars
+        public string Concat(List<string> strings)
         {
             string final = "";
             int listSize = strings.Count-1;
@@ -71,7 +88,10 @@ namespace gameController
             {
                 final += strings[i] + ", ";
             }
-            final = final.Remove(final.Length - 2);
+            if(final.Length > 2)
+            {
+                final = final.Remove(final.Length - 2);
+            }
             Debug.Log(final);
             return final;
         }
@@ -79,49 +99,99 @@ namespace gameController
         //Math questions or somein' goes ere'
 
         //Make radius equal 695,700 KM
-
-        //HINT(Dont forget to use Math functions such as Math.PI to use pi or Math.E for Eulers number to calcualte special numbers)
-        //HINT(Dont be afraid to look up the formula for volume of a sphere)
-        public float volumeOfTheSun(float radius)
+        //HINT: Dont forget to use Math functions such as Math.PI to use pi or Math.E for Eulers number to calcualte special numbers
+        //HINT: Dont be afraid to look up the formula for volume of a sphere
+        //HINT: Formula for finding the volume of a sphere is as follows: (((4/3) * PI) radius^3)
+        public float VolumeOfTheSun(float radius)
         {
             float final;
             final = (float)((4 / 3) * Math.PI * Mathf.Pow(radius, 3));
-
+            Debug.Log(final);
             return final;
         }
 
         #endregion
 
         #region Functions
-        public void editText()
+        public void EditText()
         {
             //Allow player to edit the object text here
+            //Make sure to add a \n to every enter or somehting like that (Unless it just fucking works)
         }
 
-        public void submitText()
+        public void SubmitText()
         {
-            //Submit after editing is done to confirm functionality (unit test?)
+            bool val = Result();
+
+            if (val)
+            {
+                Debug.Log("Correct Answer");
+                nextQuestion();
+                score += 250;
+            }
+            else
+            {
+                Debug.Log("Wrong Answer!");
+                score -= 50;
+            }
         }
 
-        public void skipQuestion()
+        public void SkipQuestion()
         {
-            //Skip question and deduct points
-            //Use another function in here so its DRY
+            nextQuestion();
+            score -= 50;
         }
 
-        public void changeText(int num)
+        public void nextQuestion()
         {
-            //Make sure to add \n to every time the user presses enter if possible
+            if (currLevel < 4)
+            {
+                currLevel++;
+                QuestionController(currLevel);
+            }
         }
 
-        public void correct()
+        public void QuestionController(int q)
         {
+            switch(q)
+            {
+                case 0:
+                    textChanger.text = questions[0];
+                    break;
+                case 1:
+                    textChanger.text = questions[1];
+                    break;
+                case 2:
+                    textChanger.text = questions[2];
+                    break;
+                case 3:
+                    FinshGame();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public bool Result()
+        {
+            //Check input here
+            return true;
 
         }
 
-        public void incorrect()
+        public void ResetText()
         {
+            QuestionController(currLevel);
+        }
 
+        public void FinshGame()
+        {
+            if (score > 0) { score = 0; }
+            var currentMoney = PlayerPrefs.GetInt("money");
+
+            PlayerPrefs.SetInt("money", currentMoney + score);
+            //Bring up the win UI
+            winUI.SetActive(true);
         }
         #endregion 
     }
