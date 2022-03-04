@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Game;
 using UnityEngine;
 using System;
 using TMPro;
@@ -10,8 +11,11 @@ namespace gameController
     {
         #region Variables
         List<String> questions = new List<string>();
+        GameObject inputText_Canvas;
         TextMeshPro textChanger;
-        GameObject winUI;
+        TextMeshPro playerInputText;
+        Rigidbody playerRigidBody;
+        public List<Rigidbody> rigidbodies = new List<Rigidbody>();
         int currLevel = 0;
         int score = 0;
 
@@ -20,7 +24,6 @@ namespace gameController
         #region Core Functions
         void Start()
         {
-            //populate questions list (3 questions)
             questions.Add(
                 "//Instructions: Return a list of integers from 1 to 10\n" + 
                 "\n" +
@@ -57,8 +60,14 @@ namespace gameController
                 );
 
             textChanger = GameObject.Find("GameText").GetComponent<TextMeshPro>();
-            winUI = GameObject.Find("Win_Canvas");
-            winUI.SetActive(false);
+            inputText_Canvas = GameObject.Find("InputText_Canvas");
+            inputText_Canvas.SetActive(false);
+
+            foreach(Rigidbody player in rigidbodies)
+            {
+                if (player != null && player.gameObject.active) { playerRigidBody = player; }
+            }
+            Debug.Log(playerRigidBody);
             QuestionController(currLevel);
         }
         #endregion
@@ -115,8 +124,24 @@ namespace gameController
         #region Functions
         public void EditText()
         {
-            //Allow player to edit the object text here
-            //Make sure to add a \n to every enter or somehting like that (Unless it just fucking works)
+            inputText_Canvas.SetActive(true);
+            playerRigidBody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
+            if (playerInputText == null)
+            {
+                playerInputText = GameObject.Find("PlayerInputText").GetComponent<TextMeshPro>();
+            }
+            //Pressing enter ends instead of new line
+            //Make sure to add a \n to every enter or something like that (Unless it just fucking works)
+            //760 Total Char limit
+            //58 Line Char Limit
+
+        }
+
+        public void exitEdit()
+        {
+            inputText_Canvas.SetActive(false);
+            playerRigidBody.constraints = RigidbodyConstraints.None;
+            playerRigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         }
 
         public void SubmitText()
@@ -188,10 +213,10 @@ namespace gameController
         {
             if (score > 0) { score = 0; }
             var currentMoney = PlayerPrefs.GetInt("money");
-
+            var script = GameObject.Find("Player").GetComponent<WinScript>();
             PlayerPrefs.SetInt("money", currentMoney + score);
-            //Bring up the win UI
-            winUI.SetActive(true);
+            script.enabled = true;
+            enabled = false;
         }
         #endregion 
     }
