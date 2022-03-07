@@ -4,10 +4,9 @@ using UnityEngine;
 
 namespace gameController
 {
-    public class TextEditor : MonoBehaviour
+    public class MonitorText : MonoBehaviour
     {
         #region Variables
-        bool active = false;
         GameController gameController;
         #endregion
 
@@ -16,9 +15,12 @@ namespace gameController
         {
             gameController = GameObject.Find("Game").GetComponent<GameController>();
         }
-        private void Update()
+        private void OnEnable()
         {
-            gameController.EditText();
+            if(gameController.MonitorAwake)
+            {
+                gameController.ResetText();
+            }
         }
         #endregion
     }

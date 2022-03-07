@@ -13,19 +13,22 @@ namespace gameController
         List<String> questions = new List<string>();
         GameObject inputText_Canvas;
         TextMeshPro textChanger;
+        TMP_InputField monitorText;
+        TextMeshPro userText;
         TextMeshPro playerInputText;
         Rigidbody playerRigidBody;
         public List<Rigidbody> rigidbodies = new List<Rigidbody>();
         int currLevel = 0;
         int score = 0;
+        public bool MonitorAwake = false;
 
         #endregion
 
         #region Core Functions
-        void Start()
+        private void Awake()
         {
             questions.Add(
-                "//Instructions: Return a list of integers from 1 to 10\n" + 
+                "//Instructions: Return a list of integers from 1 to 10\n" +
                 "\n" +
                 "public List<int> generateList()\n" +
                 "{\n" +
@@ -58,9 +61,14 @@ namespace gameController
                 "    //HINT: Formula for finding the volume of a sphere is as follows: (((4/3) * PI) radius^3)\n" +
                 "}\n"
                 );
+        }
 
-            textChanger = GameObject.Find("GameText").GetComponent<TextMeshPro>();
+        void Start()
+        {
             inputText_Canvas = GameObject.Find("InputText_Canvas");
+            textChanger = GameObject.Find("GameText").GetComponent<TextMeshPro>();
+            userText = GameObject.Find("UserText").GetComponent<TextMeshPro>();
+            monitorText = GameObject.Find("InputText").GetComponent<TMP_InputField>();
             inputText_Canvas.SetActive(false);
 
             foreach(Rigidbody player in rigidbodies)
@@ -122,26 +130,80 @@ namespace gameController
         #endregion
 
         #region Functions
+        public bool Result()
+        {
+            switch(currLevel)
+            {
+                case 0:
+                    test1(userText.text);
+                    break;
+                case 1:
+                    test2(userText.text);
+                    break;
+                case 2:
+                    test3(userText.text);
+                    break;
+                default:
+                    break;
+            }
+
+            return true;
+        }
+
+        public bool test1(string userInput)
+        {
+            //Test Q1
+
+            bool t = false;
+
+            return t;
+        }
+        public bool test2(string userInput)
+        {
+            //Test Q2
+
+            bool t = false;
+
+            return t;
+        }
+        public bool test3(string userInput)
+        {
+            //Test Q3
+
+            bool t = false;
+
+            return t;
+        }
+
         public void EditText()
         {
             inputText_Canvas.SetActive(true);
-            playerRigidBody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
+            FreezeMovement(true);
             if (playerInputText == null)
             {
                 playerInputText = GameObject.Find("PlayerInputText").GetComponent<TextMeshPro>();
             }
-            //Pressing enter ends instead of new line
-            //Make sure to add a \n to every enter or something like that (Unless it just fucking works)
-            //760 Total Char limit
-            //58 Line Char Limit
-
         }
 
         public void exitEdit()
         {
             inputText_Canvas.SetActive(false);
-            playerRigidBody.constraints = RigidbodyConstraints.None;
-            playerRigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+            FreezeMovement(false);
+            userText.text = monitorText.text;
+            MonitorAwake = false;
+        }
+
+        public void FreezeMovement(bool t)
+        {
+            if (t)
+            {
+                playerRigidBody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
+            }
+            else
+            {
+                playerRigidBody.constraints = RigidbodyConstraints.None;
+                playerRigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+            }
         }
 
         public void SubmitText()
@@ -182,12 +244,18 @@ namespace gameController
             {
                 case 0:
                     textChanger.text = questions[0];
+                    monitorText.text = questions[0];
+                    userText.text = monitorText.text;
                     break;
                 case 1:
                     textChanger.text = questions[1];
+                    monitorText.text = questions[1];
+                    userText.text = monitorText.text;
                     break;
                 case 2:
                     textChanger.text = questions[2];
+                    monitorText.text = questions[2];
+                    userText.text = monitorText.text;
                     break;
                 case 3:
                     FinshGame();
@@ -195,13 +263,6 @@ namespace gameController
                 default:
                     break;
             }
-        }
-
-        public bool Result()
-        {
-            //Check input here
-            return true;
-
         }
 
         public void ResetText()

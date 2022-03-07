@@ -22,6 +22,7 @@ namespace gameController
             if (Input.GetKeyDown("space") && active)
             {
                 gameController.EditText();
+                gameController.MonitorAwake = true;
             }
         }
         #endregion
