@@ -11,6 +11,7 @@ namespace gameController
     {
         #region Variables
         List<String> questions = new List<string>();
+        List<String> answers = new List<string>();
         GameObject inputText_Canvas;
         TextMeshPro textChanger;
         TMP_InputField monitorText;
@@ -27,6 +28,18 @@ namespace gameController
         #region Core Functions
         private void Awake()
         {
+            answers.Add(
+                @"public List<int> GenerateList(int length)
+        {
+            List<int> intList = new List<int>();
+            for(int i = 0; i < length; i++)
+            {
+                intList.Add(i+1);
+                Debug.Log(intList[i]);
+            }
+            return intList;
+        }"
+                );
             questions.Add(
                 "//Instructions: Return a list of integers from 1 to 10\n" +
                 "\n" +
@@ -37,7 +50,9 @@ namespace gameController
                 "       //Add to the integer list object\n" +
                 "}\n"
                 );
-
+            answers.Add(
+                @""
+                );
             questions.Add(
                 "//Instructions: Concatenate a list of strings into one string in a readable format\n" +
                 "//HINT: Add a \", \" to the end of each addition to the string\n" +
@@ -52,6 +67,15 @@ namespace gameController
                 "   Debug.Log(final);\n" +
                 "   return final;\n" +
                 "}\n"
+                );
+            answers.Add(
+                @"public float VolumeOfTheSun(float radius)
+        {
+            float final;
+            final = (float)((4 / 3) * Math.PI * Mathf.Pow(radius, 3));
+            Debug.Log(final);
+            return final;
+        }"
                 );
             questions.Add(
                 "//Instructions: Calculate the volume of the sun... yes really, you are given the radius and the volume formula to make it easier luckily\n" +
@@ -132,45 +156,29 @@ namespace gameController
         #region Functions
         public bool Result()
         {
+            bool res = false;
             switch(currLevel)
             {
                 case 0:
-                    test1(userText.text);
+                    res = test(userText.text, 0);
                     break;
                 case 1:
-                    test2(userText.text);
+                    res = test(userText.text, 1);
                     break;
                 case 2:
-                    test3(userText.text);
+                    res = test(userText.text, 2);
                     break;
                 default:
                     break;
             }
 
-            return true;
+            return res;
         }
 
-        public bool test1(string userInput)
+        public bool test(string userInput, int testNum)
         {
-            //Test Q1
-
             bool t = false;
-
-            return t;
-        }
-        public bool test2(string userInput)
-        {
-            //Test Q2
-
-            bool t = false;
-
-            return t;
-        }
-        public bool test3(string userInput)
-        {
-            //Test Q3
-
-            bool t = false;
+            if (userInput.Equals(answers[testNum])) { t = true; } else { t = false; }
 
             return t;
         }
@@ -243,17 +251,17 @@ namespace gameController
             switch(q)
             {
                 case 0:
-                    textChanger.text = questions[0];
+                    textChanger.text = answers[0];
                     monitorText.text = questions[0];
                     userText.text = monitorText.text;
                     break;
                 case 1:
-                    textChanger.text = questions[1];
+                    textChanger.text = answers[1];
                     monitorText.text = questions[1];
                     userText.text = monitorText.text;
                     break;
                 case 2:
-                    textChanger.text = questions[2];
+                    textChanger.text = answers[2];
                     monitorText.text = questions[2];
                     userText.text = monitorText.text;
                     break;
