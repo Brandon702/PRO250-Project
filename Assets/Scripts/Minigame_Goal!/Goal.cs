@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using TMPro;
+using Assets.Scripts.Game;
 
 public class Goal : MonoBehaviour
 {
@@ -108,7 +109,7 @@ public class Goal : MonoBehaviour
 
                         //south
                         case -2:
-                            mapRow--;
+                            mapRow++;
                             break;
 
                         //east
@@ -123,7 +124,7 @@ public class Goal : MonoBehaviour
 
                         //south
                         case 2:
-                            mapRow--;
+                            mapRow++;
                             break;
 
                         //west
@@ -170,6 +171,10 @@ public class Goal : MonoBehaviour
             SetPosition(endRow, endCol, goal);
             mapRow = row;
             mapCol = col;
+        }
+        else
+        {
+            Finish();
         }
     }
 
@@ -280,5 +285,12 @@ public class Goal : MonoBehaviour
             8 => rowNine[col],
             _ => null,
         };
+    }
+
+    void Finish()
+    {
+        var script = GameObject.Find("Player").GetComponent<WinScript>();
+        script.enabled = true;
+        enabled = false;
     }
 }
