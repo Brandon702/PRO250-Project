@@ -4,7 +4,6 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using TMPro;
-using Assets.Scripts.Game;
 
 public class Goal : MonoBehaviour
 {
@@ -63,7 +62,7 @@ public class Goal : MonoBehaviour
 
     IEnumerator Calculate()
     {
-        int rightTurns = 0;
+        int leftTurns = 0;
         bool outOfBounds = false;
 
         foreach (string function in moves)
@@ -71,18 +70,18 @@ public class Goal : MonoBehaviour
             switch (function)
             {
                 case "Right":
-                    rightTurns++;
-                    if (rightTurns > 3)
+                    leftTurns++;
+                    if (leftTurns > 3)
                     {
-                        rightTurns = 0;
+                        leftTurns = 0;
                     }
                     break;
 
                 case "Left":
-                    rightTurns--;
-                    if (rightTurns < -3)
+                    leftTurns--;
+                    if (leftTurns < -3)
                     {
-                        rightTurns = 0;
+                        leftTurns = 0;
                     }
                     break;
 
@@ -100,7 +99,7 @@ public class Goal : MonoBehaviour
 
                     //calculate new position
                     int mapColBefore = mapCol, mapRowBefore = mapRow;
-                    switch (rightTurns)
+                    switch (leftTurns)
                     {
                         //west
                         case -1:
@@ -109,7 +108,7 @@ public class Goal : MonoBehaviour
 
                         //south
                         case -2:
-                            mapRow++;
+                            mapRow--;
                             break;
 
                         //east
@@ -124,7 +123,7 @@ public class Goal : MonoBehaviour
 
                         //south
                         case 2:
-                            mapRow++;
+                            mapRow--;
                             break;
 
                         //west
@@ -171,9 +170,7 @@ public class Goal : MonoBehaviour
             SetPosition(endRow, endCol, goal);
             mapRow = row;
             mapCol = col;
-            rightTurns = 0;
         }
-        else { Finish(); }
     }
 
     void RandomSpawn()
@@ -266,13 +263,6 @@ public class Goal : MonoBehaviour
             return true;
         else
             return false;
-    }
-
-    void Finish()
-    {
-        var script = GameObject.Find("Player").GetComponent<WinScript>();
-        script.enabled = true;
-        enabled = false;
     }
 
     GameObject GetObject(int row, int col)
