@@ -63,37 +63,42 @@ public class Goal : MonoBehaviour
     IEnumerator Calculate()
     {
         int leftTurns = 0;
-        int rotation = 0; //0 - north, 90 & -270 - east, -90 & 270 west, 180 & -180 - south
+        bool outOfBounds = false;
 
         foreach (string function in moves)
         {
             switch (function)
             {
-                case "Left":
+                case "Right":
                     leftTurns++;
-                    rotation += 90;
                     if (leftTurns > 3)
                     {
                         leftTurns = 0;
-                        rotation = 0;
                     }
-                    GetObject(mapRow, mapCol).transform.rotation = Quaternion.Euler(0, 0, 90);
                     break;
 
-                case "Right":
+                case "Left":
                     leftTurns--;
-                    rotation -= 90;
                     if (leftTurns < -3)
                     {
                         leftTurns = 0;
-                        rotation = 0;
                     }
                     break;
 
                 case "Move":
-                    //previous position
-                    SetPosition(mapRow, mapCol);
+                    if (mapCol == endCol && mapRow == endRow)
+                    {
+                        //if previous position was the goal, set it back
+                        SetPosition(mapRow, mapCol, goal);
+                    }
+                    else
+                    {
+                        //clear previous position
+                        SetPosition(mapRow, mapCol);
+                    }
+
                     //calculate new position
+                    int mapColBefore = mapCol, mapRowBefore = mapRow;
                     switch (leftTurns)
                     {
                         //west
@@ -128,13 +133,23 @@ public class Goal : MonoBehaviour
 
                         //north
                         case 0:
-                            mapRow++;
+                            mapRow--;
                             break;
 
                         default:
                             break;
                     }
-                    //new position
+
+                    //if out of bounds, resets player.
+                    if (mapRow >= 9 || mapCol >= 11 || mapRow < 0 || mapCol < 0)
+                    {
+                        outOfBounds = true;
+                        SetPosition(mapRowBefore, mapColBefore, player);
+                        mapCol = mapColBefore;
+                        mapRow = mapRowBefore;
+                        break;
+                    }
+                    //set player's new position
                     SetPosition(mapRow, mapCol, player);
                     break;
 
@@ -142,15 +157,20 @@ public class Goal : MonoBehaviour
                     break;
             }
             yield return new WaitForSeconds(0.5f);
+            if (outOfBounds)
+            {
+                break;
+            }
         }
 
-        /*if (!Win())
+        if (!Win())
         {
             SetPosition(row, col, player);
             SetPosition(mapRow, mapCol);
+            SetPosition(endRow, endCol, goal);
             mapRow = row;
             mapCol = col;
-        }*/
+        }
     }
 
     void RandomSpawn()
